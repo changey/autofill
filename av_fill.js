@@ -35,8 +35,8 @@ casper.then(function() {
 
     $("#cmbDestino option:selected")[0].text='Taipei, Taiwan Taoyuan International Airport (TPE), Taiwan';
     $("#cmbDestino option:selected")[0].value="TPE";
-    $('#fechaSalida').val('06/23/2014');
-    $('#fechaRegreso').val('06/29/2014');
+    $('#fechaSalida').val('09/18/2014');
+    $('#fechaRegreso').val('09/25/2014');
     submitForm();
     //$('a[href="javascript:goForm();"]').click();
     var names = $("#cmbDestino option:selected")
