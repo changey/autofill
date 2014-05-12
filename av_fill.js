@@ -26,12 +26,6 @@ casper.waitForSelector('#botonlogin', function() {
 casper.thenOpen('https://www.lifemiles.com/eng/use/red/dynredpar.aspx');
 
 casper.then(function() {
-//  this.fillSelectors('#requirementsform', {
-//    '#textOrigen': 'San Francisco (SFO), United States',
-//    '#textDestino': 'Taipei, Taiwan Taoyuan International Airport (TPE), Taiwan',
-//    '#fechaSalida': '06/23/2014',
-//    '#fechaRegreso': '06/29/2014'
-//  }, false);
 
   this.evaluate(function() {
     $("#cmbOrigen option:selected")[0].text='San Francisco (SFO), United States';
@@ -47,17 +41,6 @@ casper.then(function() {
     //$('a[href="javascript:goForm();"]').click();
     var names = $("#cmbDestino option:selected")
   });
-  
-//  var paragraph = this.evaluate(function() {
-//    return document.querySelector('#textOrigen').val();
-//  });
-//  this.echo("origin: ", paragraph);
-//
-//  var paragraph2 = this.evaluate(function() {
-//    document.querySelector('#fechaSalida').setAttribute('value', '06/23/2014');
-//    return "foo";
-//  });
-//  this.echo("departureDate: ", paragraph2);
 });
 
 
@@ -66,16 +49,6 @@ casper.then(function() {
 //
 //  this.wait(1000);
 //  this.capture('after.png');
-//});
-
-
-//
-//casper.thenEvaluate(function() {
-//  document.querySelector('#textOrigen').setAttribute('value', 'San Francisco (SFO), United States');
-//  document.querySelector('#textDestino').setAttribute('value', 'Taipei, Taiwan Taoyuan International Airport (TPE), Taiwan');
-//  document.querySelector('#fechaSalida').setAttribute('value', '06/23/2014');
-//  document.querySelector('#fechaRegreso').setAttribute('value', '06/29/2014');
-//  //document.querySelector('#requirementsform').submit();
 //});
 
 casper.waitForSelector('#aspnetForm', function() {
