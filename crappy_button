@@ -1,0 +1,6 @@
+<div class="slide-simple-button2 slide-simple-button2-round" id="divSubmitOn">
+                        <a href="javascript:goForm();" onclick="return validaForm();" style="cursor:pointer;">
+                            <span class="slide-button2-right">
+                            </span><span class="slide-button2-left">Continue</span>
+                            </a>
+                        </div>
