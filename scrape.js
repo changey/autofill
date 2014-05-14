@@ -17,41 +17,65 @@ pjs.addSuite({
   url: 'file://localhost/Users/changey/Documents/aaproject_ms/autofill/success_search.html',
   scraper: function() {
     var output = [];
+    var flight;
     $.each($('#tblODs tr').slice(3), function() {
       var totalDeparts,
-          totalArrives,
-          totalDuration,
-          stops = "",
-          cabin = "",
-          type = "";
-      if (this.className.indexOf("tbl-collapse") > -1) {
-        type = "multi";
-      } else {
-        type = "direct";
-      }
+        totalArrives,
+        totalDuration,
+        departs,
+        arrives,
+        stops = "",
+        cabin = "",
+        type = "";
       var flightNumber = $('td:nth-child(2)', this).text();
-        if (flightNumber === "Multiple") {
-            totalDeparts = $('td:nth-child(3)', this).text();
-            totalArrives = $('td:nth-child(4)', this).text();
-            totalDuration = $('td:nth-child(5)', this).text();
-        } else {
+      if(flightNumber !== "") {
+        if (this.className.indexOf("tbl-collapse") > -1) {
+          type = "multi";
+          totalDeparts = $('td:nth-child(3)', this).text();
+          totalArrives = $('td:nth-child(4)', this).text();
+          totalDuration = $('td:nth-child(5)', this).text();
+          flight = {
+            type: type,
+            flightNumber: flightNumber,
+            departs: totalDeparts,
+            arrives: totalArrives,
+            duration: totalDuration
+          }
+        } else if (this.className.indexOf("tbl-detail") > -1) {
+          type = "detail";
           totalDeparts = $('td:nth-child(3)', this).text();
           totalArrives = $('td:nth-child(4)', this).text();
           totalDuration = $('td:nth-child(5)', this).text();
           stops = $('td:nth-child(6)', this).text();
           cabin = $('td:nth-child(6)', this).text();
+          flight = {
+            type: type,
+            flightNumber: flightNumber,
+            departs: totalDeparts,
+            arrives: totalArrives,
+            stops: stops,
+            cabin: cabin
+          }
+        } else {
+          type = "direct";
+          totalDeparts = $('td:nth-child(3)', this).text();
+          totalArrives = $('td:nth-child(4)', this).text();
+          totalDuration = $('td:nth-child(5)', this).text();
+          stops = $('td:nth-child(6)', this).text();
+          cabin = $('td:nth-child(6)', this).text();
+          flight = {
+            type: type,
+            flightNumber: flightNumber,
+            departs: totalDeparts,
+            arrives: totalArrives,
+            duration: totalDuration,
+            stops: stops,
+            cabin: cabin
+          }
         }
 
-      var flight = {
-        type: type,
-        flightNumber: flightNumber,
-        departs: totalDeparts,
-        arrives: totalArrives,
-        duration: totalDuration,
-        stops: stops,
-        cabin: cabin
+        output.push(flight);
       }
-      output.push(flight);
     });
     var outputJson = JSON.stringify(output, null, ' ');
     console.log(outputJson);
