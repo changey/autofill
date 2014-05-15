@@ -19,6 +19,7 @@ pjs.addSuite({
     var output = [];
     var flight;
     $.each($('#tblODs tr').slice(3), function() {
+
       var totalDeparts,
         totalArrives,
         totalDuration,
@@ -26,37 +27,51 @@ pjs.addSuite({
         arrives,
         stops = "",
         cabin = "",
-        type = "";
+        type = "",
+        segment=[];
       var flightNumber = $('td:nth-child(2)', this).text();
-      if(flightNumber !== "") {
-        if (this.className.indexOf("tbl-collapse") > -1) {
+      if(flightNumber !== "" && flightNumber !== "Flights") {
+        if(this.className.indexOf("tbl-collapse") > -1) {
+          if(flight != null) {
+            output.push(flight);
+          }
+
           type = "multi";
           totalDeparts = $('td:nth-child(3)', this).text();
           totalArrives = $('td:nth-child(4)', this).text();
           totalDuration = $('td:nth-child(5)', this).text();
+          segment=[];
           flight = {
             type: type,
-            flightNumber: flightNumber,
-            departs: totalDeparts,
-            arrives: totalArrives,
-            duration: totalDuration
+            summary: {
+              flightNumber: flightNumber,
+              departs: totalDeparts,
+              arrives: totalArrives,
+              totalDuration: totalDuration
+            },
+            segment: segment
           }
-        } else if (this.className.indexOf("tbl-detail") > -1) {
+        } else if(this.className.indexOf("tbl-detail") > -1) {
+
           type = "detail";
-          totalDeparts = $('td:nth-child(3)', this).text();
-          totalArrives = $('td:nth-child(4)', this).text();
-          totalDuration = $('td:nth-child(5)', this).text();
+          departs = $('td:nth-child(3)', this).text();
+          arrives = $('td:nth-child(4)', this).text();
           stops = $('td:nth-child(6)', this).text();
           cabin = $('td:nth-child(6)', this).text();
-          flight = {
+          segment = {
             type: type,
             flightNumber: flightNumber,
-            departs: totalDeparts,
-            arrives: totalArrives,
+            departs: departs,
+            arrives: arrives,
             stops: stops,
             cabin: cabin
           }
-        } else {
+          flight['segment'].push(segment);
+        }
+        else {
+          if(flight != null) {
+            output.push(flight);
+          }
           type = "direct";
           totalDeparts = $('td:nth-child(3)', this).text();
           totalArrives = $('td:nth-child(4)', this).text();
@@ -74,9 +89,9 @@ pjs.addSuite({
           }
         }
 
-        output.push(flight);
       }
     });
+    output.push(flight);
     var outputJson = JSON.stringify(output, null, ' ');
     console.log(outputJson);
 
